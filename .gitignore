@@ -1,0 +1,22 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Old Wix site HTML files (keep gallery images only)
+www.bechtprideresidential.com/*.html
+www.bechtprideresidential.com/robots.txt
+www.bechtprideresidential.com/sitemap.xml
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Internal docs — never deploy (contains client info + credentials)
+INSTRUCTIONS.md
+
+# Legacy site versions — deleted from main (recover via git history / tag v1-pre-feedback); never re-add
+/site/
+/site-v1/
+/image-assets/

@@ -1,0 +1,6 @@
+/site/services/* /site-v2/services/:splat 301
+/site-v1/services/* /site-v2/services/:splat 301
+/site/* /site-v2/ 301
+/site-v1/* /site-v2/ 301
+/INSTRUCTIONS.md /site-v2/ 301
+/ /site-v2/ 301
