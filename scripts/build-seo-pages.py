@@ -17,6 +17,8 @@ SITE = ROOT / 'site-v2'
 CONTENT = ROOT / 'content' / 'seo'
 CITIES = json.loads((CONTENT / 'cities.json').read_text())
 DOMAIN = 'https://bechtpriderestoration.com'
+# Search Console ownership for info@alphadogagency.com; retain after verification.
+GOOGLE_SITE_VERIFICATION = '9d8Z1p8XgNCl3iZ0h0evzbvof7oB0WAaes02WWZXjBI'
 PHONE = '(463) 238-4357'
 TEL = 'tel:+14632384357'
 BRAND = 'Becht Pride Restoration'
@@ -96,12 +98,14 @@ def structured(path, title, crumbs, service=None, city=None, faqs=None):
 
 
 def head(path, title, description, data):
+    verification = (f'<meta name="google-site-verification" content="{GOOGLE_SITE_VERIFICATION}">\n'
+                    if path == '/' else '')
     return f'''<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(title)}</title>
+{verification}<title>{esc(title)}</title>
 <meta name="description" content="{esc(description)}">
 <link rel="canonical" href="{DOMAIN}{path}">
 <link rel="icon" href="/favicon.png" type="image/png">
