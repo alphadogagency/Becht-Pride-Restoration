@@ -13,6 +13,7 @@ SITE = ROOT / 'site-v2'
 PHONE = '(463) 238-4357'
 TEL = 'tel:+14632384357'
 DOMAIN = 'https://bechtpriderestoration.com'
+PRIVACY = 'https://bechtpride.com/privacy-policy/'
 
 PATHS = {
  'phone': '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.4 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/>',
@@ -142,7 +143,7 @@ def final_cta(page):
 
 def footer(page):
     disclaimer = '<p class="disclaimer">Becht Pride Residential Services is a restoration and repair contractor, not an insurance company or public adjuster. Coverage is determined by your insurance policy.</p>' if page['id']=='insurance' else ''
-    return f'<footer class="site-footer"><div class="container"><div class="footer-top"><div><div class="footer-name">Becht Pride Residential Services, LLC</div><p>Indianapolis, IN · Serving Central Indiana</p><p>Office hours: Mon–Fri, 8am–4pm</p></div><a class="footer-phone call-cta" data-cta="footer" href="{TEL}">{PHONE}</a></div>{disclaimer}<div class="footer-bottom"><span>© 2026 Becht Pride Residential Services, LLC. All rights reserved.</span><a href="/ppc-privacy">Privacy policy</a></div></div></footer><aside class="sticky-call" aria-label="Call Becht Pride" aria-hidden="true" inert><p>{esc(page["sticky_note"])}</p>{cta("sticky-mobile",page["sticky_label"])}</aside>'
+    return f'<footer class="site-footer"><div class="container"><div class="footer-top"><div><div class="footer-name">Becht Pride Residential Services, LLC</div><p>Indianapolis, IN · Serving Central Indiana</p><p>Office hours: Mon–Fri, 8am–4pm</p></div><a class="footer-phone call-cta" data-cta="footer" href="{TEL}">{PHONE}</a></div>{disclaimer}<div class="footer-bottom"><span>© 2026 Becht Pride Residential Services, LLC. All rights reserved.</span><a href="{PRIVACY}">Privacy policy</a></div></div></footer><aside class="sticky-call" aria-label="Call Becht Pride" aria-hidden="true" inert><p>{esc(page["sticky_note"])}</p>{cta("sticky-mobile",page["sticky_label"])}</aside>'
 
 
 def remodeling_content(p):
@@ -370,9 +371,9 @@ def render(page):
     html=f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(page['title'])}</title><meta name="description" content="{esc(page['description'])}"><meta name="robots" content="noindex, follow"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#1f2569"><link rel="canonical" href="{DOMAIN}/{page['slug']}"><link rel="icon" href="/favicon.png"><link rel="preload" href="/ppc/assets/inter-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/ppc/landing.css">{intent_script}<style>.service-card.matched{{border:2px solid #fff102;box-shadow:0 0 0 2px #fff10240}}</style><script type="application/ld+json">{json.dumps(schema,ensure_ascii=False).replace('</','<\\/')}</script><script defer src="/ppc/landing.js"></script></head><body data-page="{page['id']}">
 <!-- Local review build. See docs/landing-pages.md for unresolved launch confirmations.
-CONFIRM: 24/7 phone coverage, service radius, trade arrangements, approved reviews,
-Google Ads/CallRail configuration, and privacy policy. Unconfirmed promotional claims
-and the unnamed review are omitted. No external tracking script is installed. -->
+Tracking for these campaigns still requires the account manager's Google Ads configuration.
+The existing business privacy policy is linked in the footer. Optional unconfirmed
+claims and the unnamed review are omitted. No ad tracking script is installed. -->
 {header}{hero}{page['renderer'](page)}{final_cta(page)}</main>{footer(page)}</body></html>'''
     (SITE/(page['slug']+'.html')).write_text(html)
 

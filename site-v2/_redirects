@@ -5,3 +5,5 @@
 /site-v1/*           /                 301
 /site-v2/*           /                 301
 /INSTRUCTIONS.md     /                 301
+/ppc-privacy         https://bechtpride.com/privacy-policy/ 301
+/ppc-privacy.html    https://bechtpride.com/privacy-policy/ 301

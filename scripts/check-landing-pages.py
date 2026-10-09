@@ -8,6 +8,7 @@ import re
 
 SITE = Path(__file__).resolve().parents[1] / 'site-v2'
 PHONE = 'tel:+14632384357'
+PRIVACY = 'https://bechtpride.com/privacy-policy/'
 
 
 class Page(HTMLParser):
@@ -58,7 +59,7 @@ for slug in ('ppc-remodeling', 'ppc-restoration', 'ppc-insurance'):
     for tag, a in page.tags:
         if tag == 'a':
             href = a.get('href', '')
-            assert href in (PHONE, '#main', '/ppc-privacy'), f'{slug}: unwanted exit {href}'
+            assert href in (PHONE, '#main', PRIVACY), f'{slug}: unwanted exit {href}'
             if href == PHONE:
                 assert 'call-cta' in a.get('class', '').split()
                 placements.append(a['data-cta'])

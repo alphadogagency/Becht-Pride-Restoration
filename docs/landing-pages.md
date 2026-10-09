@@ -1,8 +1,9 @@
 # Becht Pride campaign landing pages
 
-Standalone implementation of the three October 2026 coworker briefs, prepared
-for coworker review. Complete the tracking and privacy items below before
-sending ad traffic to these pages.
+Standalone implementation of the three October 2026 coworker briefs, published
+for coworker review. Complete the requested call-conversion tracking before
+sending ad traffic to these pages. The existing Becht Pride privacy policy is
+linked from all three footers.
 
 ## Pages and intended public URLs
 
@@ -58,43 +59,54 @@ Clicks push a `click_to_call` event into an in-memory `dataLayer`, with
 by this code alone. It does not load tracking services or fabricate conversion
 IDs. A clicked phone link is not evidence of a connected call or its duration.
 
-Required from the account manager:
+Section 10 of all three briefs requests Google Ads website-call conversions
+and secondary call-click events. GTM is an implementation option, not an
+additional requirement. CallRail is conditional on the client already using it.
 
-1. Approved Google Ads/GA4/GTM setup OR CallRail/DNI snippet and implementation
-   instructions. Avoid running two competing number-swapping systems.
-2. Separate call conversion labels for each campaign, forwarding-number setup,
-   and duration thresholds (brief suggestions: restoration/insurance 60 seconds,
-   remodeling 90 seconds).
-3. Consent requirements and approved privacy wording for the final setup.
-4. End-to-end testing from real ad visits with tag/debug tooling: visible phone
-   numbers AND `tel:` destinations must swap consistently, without duplicate
-   click events. Header mobile "Call now" links also need their href replaced.
+The main company site, `bechtpride.com`, embeds `GTM-MWJM322`. Its public
+container includes Google Ads `AW-937096300`, GA4 `G-GEBP7JLS1H`, and call-click
+events. This does not establish which account or conversion actions Jordan
+wants for the restoration campaigns. No Google Ads, GTM or CallRail installation
+was found in the 22 published restoration-site HTML pages or their source
+scripts; Cloudflare adds its own analytics beacon.
+
+The remaining input from the account manager is the correct Google Ads account
+and the website-call conversion labels/snippets for these three campaigns.
+Confirm the call-duration thresholds when configuring those conversions (brief
+suggestions: restoration/insurance 60 seconds; remodeling 90 seconds). Reuse
+the existing setup only if it is the intended setup for these campaigns.
+
+Then test real ad visits with tag/debug tooling: visible phone numbers AND
+`tel:` destinations must swap consistently, without duplicate click events.
+Header mobile "Call now" links also need their href replaced. Apply the briefs'
+conditional consent instructions if a consent banner is used.
 
 URL parameters including `gclid`, `gbraid` and `wbraid` are left intact. They
 are not copied to persistent storage or sent to a provider by the draft code.
 
-## Confirm or omit before launch
+## Existing-site answers and scope
 
-- 24/7 phone answering, live-answer/no-call-center claims and arrival windows.
-  These claims are omitted from all visible copy, variants and schema. Published
-  office hours remain Mon–Fri 8am–4pm.
-- In-house trade/no-subcontractor wording, workmanship guarantees and timelines.
-  Current copy promises one point of contact rather than unverified staffing.
-- Actual service availability, especially outside the nine listed counties.
-  Current copy asks callers to confirm availability for their project/address.
-- Free damage inspections versus free repair estimates. The drafts advertise
-  free estimates only.
-- Roofing/hail scope, Xactimate, on-site adjuster meetings and direct insurance
-  billing. Stronger unconfirmed claims are omitted.
-- Client/legal review of insurance-page language. No settlement negotiation,
-  coverage approval, deductible rebate or legal-right guarantee is promised.
-  The more categorical contractor-choice and Indiana-law statements in the
-  brief have been softened/omitted pending review.
-- Source and approval of supplied reviews and permission to use client photos.
-- Replace or approve `/ppc-privacy`. It is explicitly a review draft, not an
-  approved policy. Do not launch ads with an unfinished privacy notice.
-- Confirm final campaign paths with the account manager and test production
-  HTTP 200 behavior after deployment.
+Check existing site content before asking the account manager to supply facts
+again. Separate explicit brief requirements from optional suggestions.
+
+- [Existing privacy policy](https://bechtpride.com/privacy-policy/): its scope
+  includes Becht Pride subsidiaries/affiliates and other owned or controlled
+  sites that link to it. All landing footers now link directly to it; the draft
+  `/ppc-privacy` notice is retired and that route redirects to the existing policy.
+- [Water damage page](https://bechtpriderestoration.com/services/water-damage):
+  explicitly states 24/7 call answering, an in-house remodeling team, insurance
+  coordination and free estimates. These are already published business facts,
+  rather than unanswered questions for this build. Office hours are separate.
+- [Home remodeling page](https://bechtpriderestoration.com/services/home-remodeling):
+  explicitly states in-house plumbing, electrical, tiling and finishing, plus
+  free consultations and detailed estimates.
+- The homepage lists the nine service counties. Outer-area coverage, free
+  inspections, response-time promises, Xactimate, direct insurance billing,
+  warranties, financing and the unnamed review remain omitted. The briefs
+  permit unresolved `[CONFIRM]` claims to be removed; these optional additions
+  are not new work or blockers.
+- The insurance brief requests client review of the final copy. Handle that
+  through the current page-review process, without adding unrelated services.
 
 ## Content references
 
