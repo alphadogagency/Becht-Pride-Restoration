@@ -149,10 +149,10 @@ part of verification.
 
 ## Account-dependent completion
 
-The available browser prompted for Google reauthentication when opening Search
-Console. Sitemap submission and individual indexing requests require an
-authenticated account with access to this property. They are separate from
-publishing the sitemap and making the pages discoverable through internal links.
+Search Console ownership for `https://bechtpriderestoration.com/` was verified
+under `info@alphadogagency.com` on October 9, after Bryan explicitly requested
+the HTML verification tag. The tag is retained in the homepage and shared
+generator so subsequent content updates preserve ownership verification.
 
 The rank-tracking URL list is prepared for Kenny. No email was sent by this
 implementation.
@@ -199,8 +199,50 @@ was invented to remove it.
 - [Carmel test result](https://search.google.com/test/rich-results/result?id=aQHJo4x54qFydj6gLKjiMg)
 - [Water restoration test result](https://search.google.com/test/rich-results/result?id=9Bsxml2k4TKIwXi6zhsqEg)
 
-Search Console still displayed **“Verify it’s you”** at handoff. Sitemap
-submission and individual indexing requests remain pending authentication;
-neither was represented as completed. The sitemap is publicly available and
-referenced by `robots.txt`, and the new pages are internally linked. Google
-crawl/test success does not establish indexing, rankings, or traffic gains.
+The initial handoff required Search Console sign-in. Bryan subsequently signed
+in and authorized ownership verification. Commit `b1df8a1` published the exact
+Google verification tag; its presence in the live homepage head was checked
+before Google confirmed **“Ownership verified”** using the HTML tag method.
+
+Google accepted the sitemap submission, but the initial Sitemaps report showed
+**“Couldn't fetch.”** One retry was submitted. The live URL returned HTTP 200,
+`application/xml`, and valid XML containing all 31 canonical URLs, matching the
+published file. Google's [live crawler test](https://search.google.com/test/rich-results/result?id=hnq05-IdQWBrSoyxUNxZVA)
+also fetched the sitemap successfully. That check establishes fetchability,
+not successful processing by the Sitemaps report. The sitemap is referenced by
+`robots.txt`, and the new pages are internally linked. Google crawl/test success
+or an accepted indexing request does not establish indexing, rankings, or
+traffic gains.
+
+### Search Console request log — October 9, 2026
+
+Google confirmed **“Indexing requested”** and addition to its priority crawl
+queue for these 11 URLs:
+
+- `/service-areas/`
+- `/service-areas/indianapolis-in/`
+- `/service-areas/carmel-in/`
+- `/service-areas/fishers-in/`
+- `/service-areas/noblesville-in/`
+- `/service-areas/westfield-in/`
+- `/service-areas/greenwood-in/`
+- `/service-areas/zionsville-in/`
+- `/service-areas/avon-in/`
+- `/service-areas/plainfield-in/`
+- `/service-areas/brownsburg-in/`
+
+The Franklin request returned **“Quota Exceeded”**, instructing us to try again
+tomorrow. No further request attempts were made after that response. These four
+requested location URLs still need manual indexing requests when quota resets:
+
+- `https://bechtpriderestoration.com/service-areas/franklin-in/`
+- `https://bechtpriderestoration.com/service-areas/mccordsville-in/`
+- `https://bechtpriderestoration.com/service-areas/fortville-in/`
+- `https://bechtpriderestoration.com/service-areas/anderson-in/`
+
+The final Sitemaps report still showed **“Couldn't fetch”** after the one retry.
+Google's tested-page source was inspected and contained the actual sitemap XML,
+not a challenge/error page. Sitemap-report processing remains unresolved and
+needs a later status check; no security settings were weakened and no alternate
+account was used to bypass the indexing quota. All 31 URLs, including these
+four city pages, remain present in the public sitemap.
