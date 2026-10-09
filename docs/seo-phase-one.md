@@ -246,3 +246,66 @@ not a challenge/error page. Sitemap-report processing remains unresolved and
 needs a later status check; no security settings were weakened and no alternate
 account was used to bypass the indexing quota. All 31 URLs, including these
 four city pages, remain present in the public sitemap.
+
+## Screaming Frog audit completed — October 9, 2026
+
+Ran **Screaming Frog SEO Spider 24.3**, free/unlicensed edition, in default
+Spider mode against the live homepage. The crawl completed **80 of 80 URLs**:
+64 internal URLs (31 HTML pages and 33 assets) plus 16 external references.
+The 500-URL limit was not reached. No account or paid licence was needed.
+
+The initial crawl identified navigation group labels marked up as headings
+before the page H1, plus six homepage service links labelled “Learn More.”
+Commit `9da0f0e` changed those menu labels to styled text and made the six link
+labels describe their destinations. Local static checks, campaign regression
+checks, and desktop browser review passed. The changes were published and a
+second live Screaming Frog crawl confirmed the two warnings were resolved.
+
+Final results:
+
+- All 31 canonical pages were discovered, returned HTTP 200, and were
+  classified as indexable. This is crawl eligibility, not proof of Google indexing.
+- Zero missing, duplicate, or multiple titles and meta descriptions. Titles
+  were 37–56 characters; descriptions were 145–154 characters.
+- Exactly one H1 per page; zero missing, duplicate, or out-of-order H1s.
+- All 31 canonicals were self-referencing; none were missing or non-indexable.
+- Zero internal 4xx/5xx errors, internal redirects, redirect chains, or loops
+  in the discovered link graph. Historical redirect rules remain covered by
+  the earlier 329-check HTTP validation, not by this homepage-discovery crawl.
+- No images missing alt text or alt attributes. All 14 city pages were
+  discovered at crawl depth 1, with 31 unique inlink URLs reported for each.
+
+Raw evidence:
+
+- [Final internal URL export](screaming-frog/2026-10-09/final/internal_all.csv)
+- [Final crawl overview](screaming-frog/2026-10-09/final/crawl_overview.csv)
+- [Final warnings and opportunities](screaming-frog/2026-10-09/final/issues_overview_report.csv)
+- [Completed crawl screenshot](screaming-frog/2026-10-09/final/crawl-complete.png)
+- [Published homepage link labels](screaming-frog/2026-10-09/published-service-links.png)
+- Initial exports and detailed warning rows are preserved in
+  `screaming-frog/2026-10-09/initial/`.
+
+### Remaining audit observations
+
+The report is not warning-free. Three external municipal reference URLs
+(Fishers stormwater PDF, Plainfield parks FAQ, and Noblesville trails) returned
+HTTP 403 to Screaming Frog. Plainfield opened normally in the Codex browser,
+and the Noblesville page was readable through the web reader. The web reader
+reported that the Fishers PDF exceeded its 74,312,751-byte content limit, while
+the local HTTP check returned 403 and the Codex browser did not render it.
+That PDF's visitor accessibility remains unconfirmed from this machine. No
+external URL returned a 404, and these responses do not indicate missing
+pages on Becht's own site.
+
+Other reported opportunities are 12 images over 100 kB, 21 images without
+HTML size attributes, and the Service Areas hub's automated readability score.
+Repeated section H2s and multiple H2s reflect shared section/footer labels and
+normal multi-section page structure; duplicate page titles/descriptions remain
+zero. The crawler also reports absent HSTS, X-Frame-Options, and CSP headers.
+These observations are retained for a separate performance/security review;
+no production security policy was changed to clear a crawler warning.
+
+This completes Kyle's explicit Screaming Frog metadata crawl requirement.
+The Search Console sitemap processing issue, four quota-delayed indexing
+requests, and delivery of Kenny's URL email are separate items; this audit does
+not establish that any of them have since completed.
