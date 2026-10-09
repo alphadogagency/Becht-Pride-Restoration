@@ -13,6 +13,10 @@ www.bechtprideresidential.com/sitemap.xml
 *.swp
 *.swo
 
+# Local Python caches
+__pycache__/
+*.pyc
+
 # Internal docs — never deploy (contains client info + credentials)
 INSTRUCTIONS.md
 

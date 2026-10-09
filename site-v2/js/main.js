@@ -37,18 +37,38 @@ function initMobileNav() {
   const mobileNav = document.querySelector('.mobile-nav');
   if (!toggle || !mobileNav) return;
 
-  toggle.addEventListener('click', () => {
-    toggle.classList.toggle('open');
-    mobileNav.classList.toggle('open');
-    document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
-  });
+  function setOpen(open) {
+    toggle.classList.toggle('open', open);
+    mobileNav.classList.toggle('open', open);
+    mobileNav.inert = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  toggle.addEventListener('click', () => setOpen(!mobileNav.classList.contains('open')));
 
   mobileNav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      toggle.classList.remove('open');
-      mobileNav.classList.remove('open');
-      document.body.style.overflow = '';
+      setOpen(false);
     });
+  });
+
+  document.addEventListener('keydown', e => {
+    if (!mobileNav.classList.contains('open')) return;
+    if (e.key === 'Escape') { setOpen(false); toggle.focus(); }
+    if (e.key === 'Tab') {
+      const items = [toggle, ...mobileNav.querySelectorAll('a, summary, button')].filter(el => el.getClientRects().length);
+      const first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+  window.addEventListener('resize', () => { if (window.innerWidth > 1100) setOpen(false); });
+  const services = document.querySelector('.seo-services-menu');
+  document.addEventListener('click', e => { if (services && !services.contains(e.target)) services.open = false; });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && services?.open) { services.open = false; services.querySelector('summary').focus(); }
   });
 }
 
@@ -212,7 +232,7 @@ function initContactForm() {
 
   const successEl = form.closest('.contact-form-wrapper')?.querySelector('.form-success');
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     let valid = true;
 
@@ -247,14 +267,20 @@ function initContactForm() {
 
     if (valid) {
       const submitBtn = form.querySelector('.form-submit');
+      if (submitBtn.disabled) return;
       const btnText = submitBtn.textContent;
       submitBtn.textContent = 'Sending...';
       submitBtn.disabled = true;
 
       const service = form.querySelector('#service');
-
-      fetch('https://becht-pride.adalandings.com/api/submit', {
+      const status = form.querySelector('.form-status');
+      if (status) status.textContent = '';
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 20000);
+      try {
+        const response = await fetch('https://becht-pride.adalandings.com/api/submit', {
         method: 'POST',
+        signal: controller.signal,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           slug: 'becht-pride',
@@ -262,25 +288,26 @@ function initContactForm() {
           email: email.value.trim(),
           phone: phone.value.trim(),
           service: service ? service.value : '',
-          message: message.value.trim(),
+          message: (form.dataset.location ? `[Website request: ${form.dataset.location}]\n` : '') + message.value.trim(),
         }),
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            form.style.display = 'none';
-            if (successEl) successEl.style.display = 'block';
-          } else {
-            submitBtn.textContent = btnText;
-            submitBtn.disabled = false;
-            alert('Something went wrong. Please try again or call us directly.');
-          }
-        })
-        .catch(() => {
-          submitBtn.textContent = btnText;
-          submitBtn.disabled = false;
-          alert('Something went wrong. Please try again or call us directly.');
         });
+        if (!response.ok) throw new Error('Request failed');
+        const data = await response.json();
+        if (data.success) {
+            form.style.display = 'none';
+            if (successEl) { successEl.style.display = 'block'; successEl.focus(); }
+        } else {
+          throw new Error('Submission rejected');
+        }
+      } catch {
+        const error = 'Your request could not be confirmed. Please call (463) 238-4357, or try again.';
+        if (status) status.textContent = error;
+        else alert(error);
+      } finally {
+        clearTimeout(timer);
+        submitBtn.textContent = btnText;
+        submitBtn.disabled = false;
+      }
     }
   });
 }
@@ -299,6 +326,7 @@ function isValidEmail(email) {
 
 /* --- Scroll Animations --- */
 function initScrollAnimations() {
+  if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   // Tag elements with reveal classes
   const revealMap = [
     { selector: '.section-header', cls: 'reveal' },
@@ -315,7 +343,6 @@ function initScrollAnimations() {
     { selector: '.cta-banner h2', cls: 'reveal' },
     { selector: '.cta-banner p', cls: 'reveal' },
     { selector: '.footer-grid', cls: 'stagger-children' },
-    { selector: '.service-main', cls: 'reveal' },
     { selector: '.service-sidebar-card', cls: 'reveal-right' },
     { selector: '.service-gallery', cls: 'reveal' },
     { selector: '.service-gallery-grid', cls: 'stagger-children' },
@@ -339,7 +366,7 @@ function initScrollAnimations() {
       }
     });
   }, {
-    threshold: 0.15,
+    threshold: 0.05,
     rootMargin: '0px 0px -40px 0px'
   });
 

@@ -42,6 +42,14 @@ deployments: enabled. Pushing to `main` publishes `site-v2/` to
 
 Review local changes before committing and pushing to production.
 
+## Organic SEO pages
+
+The homepage, service pages, and Service Areas pages share static templates.
+Edit the sources described in [the Phase 1 SEO notes](docs/seo-phase-one.md),
+then run `python3 scripts/build-seo-pages.py`. The generated HTML is checked in;
+Cloudflare does not need a build command. The same notes explain URL redirects,
+content research, checks, and Search Console follow-up.
+
 ## Campaign landing pages
 
 The three standalone campaign pages are `/ppc-remodeling`, `/ppc-restoration`
