@@ -18,7 +18,10 @@ class NoRedirect(HTTPRedirectHandler):
 
 def request(url):
     try:
-        with build_opener(NoRedirect).open(Request(url, method='GET'), timeout=25) as response:
+        # Cloudflare rejects Python's generic default UA (1010). Identify this
+        # first-party validation crawl explicitly; do not impersonate Googlebot.
+        req = Request(url, method='GET', headers={'User-Agent': 'BechtSEOValidation/1.0'})
+        with build_opener(NoRedirect).open(req, timeout=25) as response:
             return response.status, response.headers, response.read().decode('utf-8', errors='replace')
     except HTTPError as error:
         return error.code, error.headers, error.read().decode('utf-8', errors='replace')

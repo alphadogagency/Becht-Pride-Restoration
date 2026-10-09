@@ -155,8 +155,7 @@ authenticated account with access to this property. They are separate from
 publishing the sitemap and making the pages discoverable through internal links.
 
 The rank-tracking URL list is prepared for Kenny. No email was sent by this
-implementation. Publication and final live verification are recorded below
-when completed.
+implementation.
 
 ## Pre-publication verification — October 9, 2026
 
@@ -174,3 +173,34 @@ when completed.
   disclosure. No horizontal overflow remained. The homepage, service page,
   remodeling page, city page, and service-area hub were visually inspected.
 - JavaScript syntax and Git whitespace checks passed.
+
+## Publication and live verification — October 9, 2026
+
+Published commit `27436cb` to the existing production branch. Cloudflare's
+automatic deployment served the new pages successfully.
+
+- [Service Areas hub](https://bechtpriderestoration.com/service-areas/)
+- [Carmel city example](https://bechtpriderestoration.com/service-areas/carmel-in/)
+- [Water restoration service example](https://bechtpriderestoration.com/services/water-damage/)
+- [Kitchen and bathroom remodeling](https://bechtpriderestoration.com/services/kitchen-bathroom-remodeling/)
+- [Published sitemap](https://bechtpriderestoration.com/sitemap.xml)
+
+All **329 live HTTP checks passed**, including all canonical pages, old URL
+redirects, query-string preservation, shared assets, campaign routes, and a
+true 404. Cloudflare rejects Python's generic user agent with error 1010; the
+validation script now identifies itself as `BechtSEOValidation/1.0`. Browser
+access and Google's own crawler both succeeded without security changes.
+
+Google's Rich Results Test successfully crawled the live city and service
+templates. Each returned three valid items: Breadcrumbs, Local businesses,
+and Organization. Both had only the optional `priceRange` warning; no pricing
+was invented to remove it.
+
+- [Carmel test result](https://search.google.com/test/rich-results/result?id=aQHJo4x54qFydj6gLKjiMg)
+- [Water restoration test result](https://search.google.com/test/rich-results/result?id=9Bsxml2k4TKIwXi6zhsqEg)
+
+Search Console still displayed **“Verify it’s you”** at handoff. Sitemap
+submission and individual indexing requests remain pending authentication;
+neither was represented as completed. The sitemap is publicly available and
+referenced by `robots.txt`, and the new pages are internally linked. Google
+crawl/test success does not establish indexing, rankings, or traffic gains.
