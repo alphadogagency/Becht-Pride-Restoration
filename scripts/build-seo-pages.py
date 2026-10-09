@@ -131,7 +131,7 @@ def nav_groups():
         ('Remodeling', [(service_path('home-remodeling'), 'Home remodeling'), (service_path('kitchen-bathroom-remodeling'), 'Kitchens & bathrooms')]),
         ('Handyman', [(service_path(s['slug']), s['name']) for s in SERVICES if s['group'] == 'handyman']),
     ]
-    return ''.join('<div class="seo-nav-group"><h3>' + label + '</h3>' + ''.join(anchor(url, name) for url, name in links) + '</div>' for label, links in groups)
+    return ''.join('<div class="seo-nav-group"><p class="seo-nav-label">' + label + '</p>' + ''.join(anchor(url, name) for url, name in links) + '</div>' for label, links in groups)
 
 
 def header():
