@@ -35,17 +35,25 @@ When setting up a Git-connected Pages project, use:
 | Build output directory | `site-v2` |
 | Root directory | Repository root (leave the default) |
 
-Verify a preview before publishing to the production domain,
-<https://bechtpriderestoration.com/>. Creating or pushing to this repository
-does not itself connect it to Cloudflare or deploy the website.
+The existing `bechtpriderestoration` Cloudflare Pages project was connected to
+this repository on October 9, 2026. Production branch: `main`; automatic
+deployments: enabled. Pushing to `main` publishes `site-v2/` to
+<https://bechtpriderestoration.com/> when the deployment succeeds.
 
-Cloudflare documents that existing Direct Upload projects cannot switch to
-built-in Git integration. To retain such a project, GitHub Actions can publish
-`site-v2/` with Wrangler. Confirm the target project's setup before connecting
-Git or enabling automatic production deployments.
+Review local changes before committing and pushing to production.
 
-- [Direct Upload documentation](https://developers.cloudflare.com/pages/get-started/direct-upload/)
-- [Deploy with GitHub Actions](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/)
+## Campaign landing pages
+
+The three standalone campaign pages are `/ppc-remodeling`, `/ppc-restoration`
+and `/ppc-insurance`. They are separate from the homepage and its navigation.
+See [the landing-page notes](docs/landing-pages.md) for pending launch details,
+tracking setup and editing instructions.
+
+For previews with the same clean URLs as Cloudflare:
+
+```sh
+python3 scripts/preview.py --port 3001
+```
 
 ## Contact form
 
