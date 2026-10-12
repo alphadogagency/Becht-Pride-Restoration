@@ -11,6 +11,7 @@ import io
 import json
 import re
 from seo_services import SERVICES, RESTORATION, CORE
+from tracking import GTM_HEAD, GTM_BODY
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / 'site-v2'
@@ -104,6 +105,7 @@ def head(path, title, description, data):
 <html lang="en">
 <head>
 <meta charset="utf-8">
+{GTM_HEAD}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {verification}<title>{esc(title)}</title>
 <meta name="description" content="{esc(description)}">
@@ -120,6 +122,7 @@ def head(path, title, description, data):
 <meta property="og:image" content="{DOMAIN}/image-assets/hero-firedamage2.jpg">
 <script type="application/ld+json">{data}</script>
 </head><body>
+{GTM_BODY}
 <a class="skip-link" href="#main">Skip to content</a>
 '''
 

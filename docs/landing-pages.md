@@ -53,36 +53,33 @@ unchanged. See [Cloudflare route matching](https://developers.cloudflare.com/pag
 
 ## Conversion setup
 
+Jordan supplied Google Tag Manager container `GTM-WLKRM4DV` on October 12, 2026.
+Its standard head script and body noscript fallback are embedded sitewide,
+including all three campaign pages and the 404 page. The shared snippets live
+in `scripts/tracking.py`; both page generators import them. The static 404
+page contains the same snippets directly. No other site's container was reused.
+
 All CTA links use `tel:+14632384357` and a `data-cta` placement identifier.
 Clicks push a `click_to_call` event into an in-memory `dataLayer`, with
-`landing_page`, `service`, `cta_location` and `link_url`. Nothing is transmitted
-by this code alone. It does not load tracking services or fabricate conversion
-IDs. A clicked phone link is not evidence of a connected call or its duration.
+`landing_page`, `service`, `cta_location` and `link_url`. The installed GTM
+container can consume those events according to its published configuration.
+A clicked phone link is not evidence of a connected call or its duration.
 
 Section 10 of all three briefs requests Google Ads website-call conversions
-and secondary call-click events. GTM is an implementation option, not an
-additional requirement. CallRail is conditional on the client already using it.
+and secondary call-click events. The website embed does not verify the account
+manager's Google Ads conversion actions, labels or call-duration thresholds
+inside GTM (brief suggestions: restoration/insurance 60 seconds; remodeling
+90 seconds). No conversion IDs were invented or GTM settings changed for this
+installation. CallRail is conditional on the client already using it.
 
-The main company site, `bechtpride.com`, embeds `GTM-MWJM322`. Its public
-container includes Google Ads `AW-937096300`, GA4 `G-GEBP7JLS1H`, and call-click
-events. This does not establish which account or conversion actions Jordan
-wants for the restoration campaigns. No Google Ads, GTM or CallRail installation
-was found in the 22 published restoration-site HTML pages or their source
-scripts; Cloudflare adds its own analytics beacon.
-
-The remaining input from the account manager is the correct Google Ads account
-and the website-call conversion labels/snippets for these three campaigns.
-Confirm the call-duration thresholds when configuring those conversions (brief
-suggestions: restoration/insurance 60 seconds; remodeling 90 seconds). Reuse
-the existing setup only if it is the intended setup for these campaigns.
-
-Then test real ad visits with tag/debug tooling: visible phone numbers AND
+Conversion verification still requires ad visits with tag/debug tooling: visible phone numbers AND
 `tel:` destinations must swap consistently, without duplicate click events.
 Header mobile "Call now" links also need their href replaced. Apply the briefs'
 conditional consent instructions if a consent banner is used.
 
-URL parameters including `gclid`, `gbraid` and `wbraid` are left intact. They
-are not copied to persistent storage or sent to a provider by the draft code.
+URL parameters including `gclid`, `gbraid` and `wbraid` are left intact. The
+site's own landing-page code does not persist them; tracking behavior is now
+also governed by the published GTM container.
 
 ## Existing-site answers and scope
 

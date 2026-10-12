@@ -9,7 +9,9 @@ let variantsChecked = 0;
 
 for (const slug of ['ppc-remodeling', 'ppc-restoration', 'ppc-insurance']) {
   const html = read(`${slug}.html`);
-  const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]);
+  // Exercise page behavior without loading the external GTM container.
+  const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1])
+    .filter(script => !script.includes("'https://www.googletagmanager.com/gtm.js?id='"));
   const boot = { window: {}, document: { documentElement: { dataset: {} } }, location: { search: '' }, URLSearchParams };
   runInNewContext(scripts[0], boot);
   const config = boot.window.bechtLanding;

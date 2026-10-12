@@ -7,6 +7,7 @@ Generated pages are checked in and deploy directly from site-v2.
 from html import escape as esc
 from pathlib import Path
 import json
+from tracking import GTM_HEAD, GTM_BODY
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / 'site-v2'
@@ -369,11 +370,15 @@ def render(page):
 <header class="site-header"><div class="container header-inner"><div class="brand"><img src="/image-assets/Becht_restoration_logo-01.svg" alt="Becht Pride" width="66" height="66"><div class="brand-name">BECHT PRIDE<span>Restoration &amp; Remodeling</span></div></div><div class="header-action"><div class="header-note"><strong>{page['header_note']}</strong>{page['header_sub']}</div><a class="button call-cta" data-cta="header" href="{TEL}" aria-label="Call Becht Pride at {PHONE}">{icon('phone')}<span class="header-call-desktop">{PHONE}</span><span class="header-call-mobile">Call now</span></a></div></div></header>'''
     hero=f'''<main id="main"><section class="hero hero-{page['id']}"><div class="container hero-layout"><div class="hero-copy"><div class="eyebrow">{page['eyebrow']}</div><h1 id="hero-title">{h1}</h1><p class="hero-sub" id="hero-sub">{esc(sub)}</p>{hero_script}<ul class="hero-checks">{hero_checks}</ul>{cta('hero')}<p class="hero-micro">{esc(page['micro'])}</p><div class="hero-proof"><span class="line"></span><span><strong>Your home. Our pride.</strong> &nbsp; Since 2012.</span></div></div><figure class="hero-photo">{picture(page['hero_image'],page['hero_alt'],True)}<figcaption class="hero-photo-caption"><span class="small-label">{page['photo_label']}</span><strong>{page['photo_title']}</strong><p>{page['photo_sub']}</p></figcaption></figure></div></section><div class="trustbar"><div class="container trust-items">{trust}</div></div>'''
     html=f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(page['title'])}</title><meta name="description" content="{esc(page['description'])}"><meta name="robots" content="noindex, follow"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#1f2569"><link rel="canonical" href="{DOMAIN}/{page['slug']}"><link rel="icon" href="/favicon.png"><link rel="preload" href="/ppc/assets/inter-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/ppc/landing.css">{intent_script}<style>.service-card.matched{{border:2px solid #fff102;box-shadow:0 0 0 2px #fff10240}}</style><script type="application/ld+json">{json.dumps(schema,ensure_ascii=False).replace('</','<\\/')}</script><script defer src="/ppc/landing.js"></script></head><body data-page="{page['id']}">
-<!-- Local review build. See docs/landing-pages.md for unresolved launch confirmations.
-Tracking for these campaigns still requires the account manager's Google Ads configuration.
+<html lang="en"><head><meta charset="utf-8">
+{GTM_HEAD}
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(page['title'])}</title><meta name="description" content="{esc(page['description'])}"><meta name="robots" content="noindex, follow"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#1f2569"><link rel="canonical" href="{DOMAIN}/{page['slug']}"><link rel="icon" href="/favicon.png"><link rel="preload" href="/ppc/assets/inter-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/ppc/landing.css">{intent_script}<style>.service-card.matched{{border:2px solid #fff102;box-shadow:0 0 0 2px #fff10240}}</style><script type="application/ld+json">{json.dumps(schema,ensure_ascii=False).replace('</','<\\/')}</script><script defer src="/ppc/landing.js"></script></head><body data-page="{page['id']}">
+{GTM_BODY}
+<!-- See docs/landing-pages.md for launch confirmations and conversion verification.
+Jordan's Google Tag Manager container is installed; Google Ads conversion settings
+are managed in that container and need separate verification.
 The existing business privacy policy is linked in the footer. Optional unconfirmed
-claims and the unnamed review are omitted. No ad tracking script is installed. -->
+claims and the unnamed review are omitted. -->
 {header}{hero}{page['renderer'](page)}{final_cta(page)}</main>{footer(page)}</body></html>'''
     (SITE/(page['slug']+'.html')).write_text(html)
 

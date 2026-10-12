@@ -31,8 +31,8 @@
   updateScroll();
 
   // A click expresses intent to call; it is not proof of a connected call.
-  // No Google Ads/GA4 ID is invented and no external tracker is loaded here.
-  // The account manager can connect this event to the approved GTM container.
+  // Page HTML loads Jordan's GTM container. The account manager configures
+  // conversion tags there to consume this event; this code only queues it.
   document.addEventListener('click', event => {
     const link = event.target.closest('a.call-cta');
     if (!link) return;

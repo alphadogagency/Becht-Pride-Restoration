@@ -52,7 +52,11 @@ for slug in ('ppc-remodeling', 'ppc-restoration', 'ppc-insurance'):
     page = Page(source)
     assert sum(t == 'h1' for t, _ in page.tags) == 1, slug
     assert len(page.ids) == len(set(page.ids)), f'{slug}: duplicate IDs'
-    assert not any(t in ('form', 'nav', 'iframe') for t, _ in page.tags), slug
+    assert not any(t in ('form', 'nav') for t, _ in page.tags), slug
+    assert [a for t, a in page.tags if t == 'iframe'] == [{
+        'src': 'https://www.googletagmanager.com/ns.html?id=GTM-WLKRM4DV',
+        'height': '0', 'width': '0', 'style': 'display:none;visibility:hidden',
+    }], f'{slug}: only the supplied hidden GTM fallback is allowed'
     assert any(t == 'meta' and a.get('name') == 'robots' and a.get('content') == 'noindex, follow' for t, a in page.tags)
     assert any(t == 'link' and a.get('rel') == 'canonical' and a.get('href') == f'https://bechtpriderestoration.com/{slug}' for t, a in page.tags)
     placements = []
