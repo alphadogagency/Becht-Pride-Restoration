@@ -262,13 +262,13 @@ PAGES = [
   'services_sub':'From flooded basements to fire and storm repairs, we help put your home back together.',
   'cards':[
    ('water','Water Damage Restoration','Burst pipes, leaks and appliance failures. Water extraction, structural drying and repairs for the affected areas.','water','drop','water',[]),
-   ('basement','Flooded Basement Cleanup','Sump pump failure or heavy rain? Professional extraction, drying and repairs to help you reclaim your basement.',None,'basement','basement',[]),
+   ('basement','Flooded Basement Cleanup','Sump pump failure or heavy rain? Professional extraction, drying and repairs to help you reclaim your basement.','basement','basement','basement',[]),
    ('sewage','Sewage Backup Cleanup','Contaminated water needs professional attention. Removal, antimicrobial treatment, sanitizing and odor control.','sewage','drop','sewage',[]),
    ('fire','Fire Damage Restoration','Board-up, soot and smoke cleanup, odor removal and structural repairs after a fire.','fire','home','fire',[]),
    ('mold','Mold Removal','We identify the moisture source, contain the area and remove mold, with treatment to help prevent regrowth.','mold','shield','mold',[]),
    ('storm','Storm Damage Repair','Wind, hail, fallen trees and heavy rain. Tarping, water extraction, drying and complete repairs.','storm','hail','storm',[])],
   'call_about':{'water':'water damage','basement':'your basement','sewage':'sewage cleanup','fire':'fire damage','mold':'mold removal','storm':'storm repairs'},
-  'image_alts':{'water':'Flooded residential street illustrating water damage','sewage':'Aerial view of homes and yards in a residential neighborhood','fire':'Fire-damaged interior illustrating restoration needs','mold':'Mold remediation work','storm':'Storm damage and restoration'},
+  'image_alts':{'water':'Flooded residential street illustrating water damage','basement':'Finished basement living area with seating, built-in storage and recessed lighting','sewage':'Aerial view of homes and yards in a residential neighborhood','fire':'Fire-damaged interior illustrating restoration needs','mold':'Mold remediation work','storm':'Storm damage and restoration'},
   'steps':[
    ('You call, we plan','Tell us what happened and where you are. We’ll discuss availability and the next steps for your home.'),
    ('Inspect & document','Moisture meters and inspection tools help find affected areas. We document the damage for your repair estimate.'),

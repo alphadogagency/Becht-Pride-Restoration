@@ -67,8 +67,9 @@ the restoration sewage card icon, as Bryan confirmed. The latter two photos are
 general house imagery used as temporary placeholders; their alt text describes
 what is actually visible, without claiming visible hail damage or sewage.
 
-No flooded-basement photo was attached. The flooded-basement card retains its
-icon pending that missing image; the finished-basement photo is for remodeling.
+Bryan clarified that the supplied `basement.jpg` also belongs in the restoration
+page's Flooded Basement Cleanup card as a temporary placeholder. It now appears
+in both basement cards, with alt text describing the finished basement shown.
 The five supplied photos have optimized 1200-pixel JPEG fallbacks and 480/960-pixel
 WebP variants in `site-v2/ppc/assets/`.
 
