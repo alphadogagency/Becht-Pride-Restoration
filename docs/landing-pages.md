@@ -40,9 +40,10 @@ unchanged. See [Cloudflare route matching](https://developers.cloudflare.com/pag
 - The supplied Drive folder was read. All service images except the company
   van already had matching-named/equivalent local assets. The van was fetched
   from the supplied folder.
-- Bathroom, shower and flooring images are from the existing project gallery.
+- The original bathroom hero, shower and flooring images are from the existing
+  project gallery.
 - Stock service imagery is used as illustrative imagery, not labeled as Becht
-  completed projects. Kitchen and basement cards use icons.
+  completed projects. Kitchen and basement finishing cards use supplied photos.
 - The van image has older phone numbers lower down; its on-page crop shows the
   branding above those numbers. Replace it with an updated vehicle/team photo
   before launch if one is available.
@@ -50,6 +51,32 @@ unchanged. See [Cloudflare route matching](https://developers.cloudflare.com/pag
   differently framed before/after photographs would imply matching viewpoints.
 - Only the three named supplied reviews are included. No aggregate rating,
   review count, unnamed "verified" review, or invented certification is used.
+
+### October 12 photo updates
+
+Jordan's “Quick landing page changes” email supplied five photos and a
+`bathroom replacement.png` reference screenshot. That screenshot identifies the
+bathroom spotlight beside “Bathroom remodeling contractors who see the whole
+picture.” The supplied `bathroom.jpg` replaces that spotlight only; the existing
+hero and project gallery retain their original photos. Its caption now describes
+the new image without attributing it to the Becht project gallery.
+
+The kitchen and finished-basement photos replace the remodeling card icons.
+`Hail damage.jpg` replaces the insurance hail card icon. `sewage.jpg` replaces
+the restoration sewage card icon, as Bryan confirmed. The latter two photos are
+general house imagery used as temporary placeholders; their alt text describes
+what is actually visible, without claiming visible hail damage or sewage.
+
+No flooded-basement photo was attached. The flooded-basement card retains its
+icon pending that missing image; the finished-basement photo is for remodeling.
+The five supplied photos have optimized 1200-pixel JPEG fallbacks and 480/960-pixel
+WebP variants in `site-v2/ppc/assets/`.
+
+Verified locally at 1440-pixel desktop and 390-pixel mobile widths: all five
+replacement images load as responsive WebP, with no horizontal overflow,
+JavaScript errors or failed local asset requests. Static page checks and all
+34 valid/invalid service-variant behavior cases pass. Third-party tracking was
+blocked during browser QA.
 
 ## Conversion setup
 

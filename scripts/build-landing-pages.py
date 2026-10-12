@@ -47,7 +47,7 @@ def cta(location, label=None, dark=False, text=False):
     return f'<a class="{classes} call-cta" href="{TEL}" data-cta="{esc(location)}">{leading}<span>{esc(label)}</span>{icon("arrow", "class=\"arrow\"") if text else ""}</a>'
 
 
-SIZES = {'bathroom':(946,1255),'shower':(448,336),'flooring':(1008,567),'water':(800,533),'fire':(800,1200),'mold':(800,450),'storm':(800,533),'remodeling':(800,533),'restoration':(1160,756)}
+SIZES = {'bathroom':(946,1255),'bathroom-remodel':(1200,800),'kitchen':(1200,800),'basement':(1200,800),'hail':(1200,800),'sewage':(1200,837),'shower':(448,336),'flooring':(1008,567),'water':(800,533),'fire':(800,1200),'mold':(800,450),'storm':(800,533),'remodeling':(800,533),'restoration':(1160,756)}
 
 
 def picture(name, alt, eager=False, sizes='(max-width: 767px) 100vw, 50vw'):
@@ -96,9 +96,10 @@ def reviews(page):
 
 def services(page):
     cards = []
+    image_sizes = '(max-width: 767px) 100vw, 50vw' if len(page['cards']) == 4 else '(max-width: 767px) 100vw, (max-width: 1050px) 50vw, 33vw'
     for n,card in enumerate(page['cards'],1):
         key,title,copy,img,ico,matches,bullets = card
-        visual = picture(img, page['image_alts'].get(img,title), sizes='(max-width: 767px) 100vw, 33vw') if img else icon(ico)
+        visual = picture(img, page['image_alts'].get(img,title), sizes=image_sizes) if img else icon(ico)
         bullet_html = '<ul>'+''.join(f'<li>{esc(b)}</li>' for b in bullets)+'</ul>' if bullets else ''
         cards.append(f'<article class="service-card" data-matches="{esc(matches)}"><div class="service-picture {"icon-picture" if not img else ""}">{visual}<span class="number">{n:02d}</span></div><div class="card-body"><h3>{esc(title)}</h3><p>{esc(copy)}</p>{bullet_html}{cta("svc-"+key,"Call about "+page["call_about"].get(key,key.replace("-"," ")),text=True)}</div></article>')
     reorder = '''<script>(()=>{const p=window.bechtLanding;if(!p.matched)return;const grid=document.querySelector('.service-grid');const card=[...grid.children].find(c=>c.dataset.matches.split(' ').includes(p.service));if(card){grid.prepend(card);card.classList.add('matched');}})();</script>'''
@@ -153,7 +154,7 @@ def remodeling_content(p):
     for positive,title,lines in [(False,'The frustrations you want to avoid',['Missed appointments and unanswered calls','Unclear responsibility between trades','Vague quotes and surprise charges','A mess left for you to deal with']),(True,'What to expect with Becht Pride',['Clear communication from start to finish','One point of contact for your project','A detailed, transparent estimate','Respect for your home and a clean job site'])]:
         columns.append(f'<div class="compare-column {"positive" if positive else ""}"><h3>{title}</h3><ul>'+''.join(f'<li>{icon("check" if positive else "cross")}<span>{line}</span></li>' for line in lines)+'</ul></div>')
     intro += '<div class="comparison">'+''.join(columns)+'</div>'
-    spotlight = '<div class="split"><figure class="photo-frame">'+picture('shower','Custom tile shower from the Becht Pride project gallery')+'<span class="photo-tag">The details make the difference</span><figcaption>Custom shower tile · Becht Pride project gallery</figcaption></figure><div class="split-copy"><div class="eyebrow">Your everyday, upgraded</div><h2>Bathroom remodeling contractors who see the whole picture.</h2><p>Update a powder room, plan a tub to shower conversion or create a primary bath retreat. We coordinate the details — from plumbing and tile to fixtures and finishing — with one point of contact.</p>'+checks(['Custom tile showers','Tub to shower conversions','Vanities & fixtures','Heated floors','Accessibility upgrades','Full gut renovations'])+cta('bath-spotlight',f'Plan your bathroom remodel — {PHONE}')+'</div></div>'
+    spotlight = '<div class="split"><figure class="photo-frame">'+picture('bathroom-remodel','Bathroom with a white tile tub surround, gray vanity and updated lighting')+'<span class="photo-tag">The details make the difference</span><figcaption>Bathroom remodeling · Vanities, tile & finishes</figcaption></figure><div class="split-copy"><div class="eyebrow">Your everyday, upgraded</div><h2>Bathroom remodeling contractors who see the whole picture.</h2><p>Update a powder room, plan a tub to shower conversion or create a primary bath retreat. We coordinate the details — from plumbing and tile to fixtures and finishing — with one point of contact.</p>'+checks(['Custom tile showers','Tub to shower conversions','Vanities & fixtures','Heated floors','Accessibility upgrades','Full gut renovations'])+cta('bath-spotlight',f'Plan your bathroom remodel — {PHONE}')+'</div></div>'
     gallery=head('Real spaces. Thoughtful details.','Recent remodeling projects in Central Indiana.','A closer look at work from our project gallery.')+'<div class="gallery">'
     for img,title,sub in [('bathroom','A fresh take on the everyday','Bathroom vanity & finishes'),('shower','Built around the details','Custom shower tile'),('flooring','A new foundation for your room','Flooring installation')]:
         gallery+='<figure>'+picture(img,title)+'<figcaption><strong>'+title+'</strong><span>'+sub+'</span></figcaption></figure>'
@@ -208,12 +209,12 @@ PAGES = [
   'cards':[
    ('bathroom','Bathroom Remodel','From new vanities and fixtures to full gut renovations with custom tile showers, heated floors and modern layouts.','bathroom','home','bathroom bathroom-contractor',[]),
    ('shower','Tub to Shower Conversion','Replace a dated tub with a walk-in shower, custom tile and accessibility options designed around your needs.','shower','shower','shower',[]),
-   ('kitchen','Kitchen Remodel','Cabinetry, countertops, backsplashes, flooring, lighting and layout changes — built around how your family lives.',None,'kitchen','kitchen',[]),
-   ('basement','Basement Finishing','Make room for a family space, guest suite or office, with framing, drywall, flooring, lighting and finishing.',None,'basement','basement',[]),
+   ('kitchen','Kitchen Remodel','Cabinetry, countertops, backsplashes, flooring, lighting and layout changes — built around how your family lives.','kitchen','kitchen','kitchen',[]),
+   ('basement','Basement Finishing','Make room for a family space, guest suite or office, with framing, drywall, flooring, lighting and finishing.','basement','basement','basement',[]),
    ('fullhome','Full-Home Renovations','A coordinated plan for transforming your living space, managed by one local team.','remodeling','home','home',[]),
    ('flooring','Flooring, Paint & Trim','Hardwood, tile, luxury vinyl plank and laminate, plus fresh paint, new trim and finishing details.','flooring','tools','flooring',[])],
   'call_about':{'bathroom':'your bathroom','shower':'your shower','kitchen':'your kitchen','basement':'your basement','fullhome':'your renovation','flooring':'your finishes'},
-  'image_alts':{'bathroom':'Bathroom vanity from the Becht Pride project gallery','shower':'Custom shower tile from the Becht Pride project gallery','remodeling':'Interior remodeling inspiration','flooring':'New flooring from the Becht Pride project gallery'},
+  'image_alts':{'bathroom':'Bathroom vanity from the Becht Pride project gallery','shower':'Custom shower tile from the Becht Pride project gallery','kitchen':'Kitchen with white cabinetry, stone countertops and stainless steel appliances','basement':'Finished basement living area with seating, built-in storage and recessed lighting','remodeling':'Interior remodeling inspiration','flooring':'New flooring from the Becht Pride project gallery'},
   'steps':[
    ('Call us','Tell us about your project. We’ll answer your questions and arrange a time to discuss your space.'),
    ('Free in-home consultation','We look at your home and talk through your goals, priorities and budget.'),
@@ -262,12 +263,12 @@ PAGES = [
   'cards':[
    ('water','Water Damage Restoration','Burst pipes, leaks and appliance failures. Water extraction, structural drying and repairs for the affected areas.','water','drop','water',[]),
    ('basement','Flooded Basement Cleanup','Sump pump failure or heavy rain? Professional extraction, drying and repairs to help you reclaim your basement.',None,'basement','basement',[]),
-   ('sewage','Sewage Backup Cleanup','Contaminated water needs professional attention. Removal, antimicrobial treatment, sanitizing and odor control.',None,'drop','sewage',[]),
+   ('sewage','Sewage Backup Cleanup','Contaminated water needs professional attention. Removal, antimicrobial treatment, sanitizing and odor control.','sewage','drop','sewage',[]),
    ('fire','Fire Damage Restoration','Board-up, soot and smoke cleanup, odor removal and structural repairs after a fire.','fire','home','fire',[]),
    ('mold','Mold Removal','We identify the moisture source, contain the area and remove mold, with treatment to help prevent regrowth.','mold','shield','mold',[]),
    ('storm','Storm Damage Repair','Wind, hail, fallen trees and heavy rain. Tarping, water extraction, drying and complete repairs.','storm','hail','storm',[])],
   'call_about':{'water':'water damage','basement':'your basement','sewage':'sewage cleanup','fire':'fire damage','mold':'mold removal','storm':'storm repairs'},
-  'image_alts':{'water':'Flooded residential street illustrating water damage','fire':'Fire-damaged interior illustrating restoration needs','mold':'Mold remediation work','storm':'Storm damage and restoration'},
+  'image_alts':{'water':'Flooded residential street illustrating water damage','sewage':'Aerial view of homes and yards in a residential neighborhood','fire':'Fire-damaged interior illustrating restoration needs','mold':'Mold remediation work','storm':'Storm damage and restoration'},
   'steps':[
    ('You call, we plan','Tell us what happened and where you are. We’ll discuss availability and the next steps for your home.'),
    ('Inspect & document','Moisture meters and inspection tools help find affected areas. We document the damage for your repair estimate.'),
@@ -317,11 +318,11 @@ PAGES = [
   'services_sub':'Storm, hail, water or fire — clear documentation and a coordinated repair plan.',
   'cards':[
    ('storm','Storm Damage Insurance Claim Repairs','Wind, fallen trees and severe weather. We help protect your home and document the damage for repairs.','storm','hail','storm',['Tarping & board-up','Tree & debris removal','Wind damage repairs','Structural repairs']),
-   ('hail','Hail Damage Repair & Insurance Claims','Hail damage can be easy to miss. Talk to our team about documenting the affected areas and planning repairs.',None,'hail','hail',['Roof damage assessment','Siding & gutter repairs','Window damage','Photo documentation']),
+   ('hail','Hail Damage Repair & Insurance Claims','Hail damage can be easy to miss. Talk to our team about documenting the affected areas and planning repairs.','hail','hail','hail',['Roof damage assessment','Siding & gutter repairs','Window damage','Photo documentation']),
    ('water','Water Damage Insurance Claim Help','Burst pipes, flooding and sewage backups. Extraction, drying and the moisture documentation needed for repair estimates.','water','drop','water',['Water extraction','Structural drying','Moisture documentation','Full repairs']),
    ('fire','Rebuild After Fire Damage','Fire, smoke and firefighting water. We help clean up, restore what can be saved and rebuild the rest.','fire','home','fire',['Board-up & tarping','Smoke & odor cleanup','Contents cleaning','Reconstruction'])],
   'call_about':{'storm':'storm repairs','hail':'hail damage','water':'water repairs','fire':'fire repairs'},
-  'image_alts':{'storm':'Storm-damaged property illustrating insurance repair needs','water':'Floodwater illustrating a water damage repair need','fire':'Fire-damaged interior'},
+  'image_alts':{'storm':'Storm-damaged property illustrating insurance repair needs','hail':'Two-story home exterior with siding, windows and a shingle roof','water':'Floodwater illustrating a water damage repair need','fire':'Fire-damaged interior'},
   'steps':[
    ('Call our team','Tell us what happened. We’ll discuss the damage, your location and the work your home may need.'),
    ('Protect the property','We discuss temporary protection such as tarping, board-up or water extraction when appropriate.'),
