@@ -20,6 +20,8 @@ CITIES = json.loads((CONTENT / 'cities.json').read_text())
 DOMAIN = 'https://bechtpriderestoration.com'
 # Search Console ownership for info@alphadogagency.com; retain after verification.
 GOOGLE_SITE_VERIFICATION = '9d8Z1p8XgNCl3iZ0h0evzbvof7oB0WAaes02WWZXjBI'
+# Bing ownership for info@alphadogagency.com; retain after verification.
+BING_SITE_VERIFICATION = 'AC9E0B99A65EEEC940B43BA9F2284462'
 PHONE = '(463) 238-4357'
 TEL = 'tel:+14632384357'
 BRAND = 'Becht Pride Restoration'
@@ -100,6 +102,7 @@ def structured(path, title, crumbs, service=None, city=None, faqs=None):
 
 def head(path, title, description, data):
     verification = (f'<meta name="google-site-verification" content="{GOOGLE_SITE_VERIFICATION}">\n'
+                    f'<meta name="msvalidate.01" content="{BING_SITE_VERIFICATION}">\n'
                     if path == '/' else '')
     return f'''<!doctype html>
 <html lang="en">
